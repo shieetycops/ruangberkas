@@ -93,6 +93,12 @@ export default function Page() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const [activeTool, setActiveTool] = useState<string | null>(null)
+  const [activeSection, setActiveSection] = useState('beranda')
+
+  const goToSection = (section: string) => {
+    setActiveSection(section)
+    document.getElementById(section)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   return (
     <main className="min-h-screen bg-[#f7f8fa] text-[#15232f]">
@@ -108,14 +114,14 @@ export default function Page() {
           <nav className={`flex-1 py-6 ${sidebarCollapsed ? 'px-3' : 'px-4'}`} aria-label="Navigasi utama">
             {!sidebarCollapsed && <p className="px-3 pb-3 text-[10px] font-bold uppercase tracking-[0.16em] text-[#b9d8c8]">Workspace</p>}
             <div className="flex flex-col gap-1">
-              <a href="#beranda" className={`flex items-center gap-3 rounded-xl bg-[#e8f3ed] px-3 py-3 text-[13px] font-bold text-[#1f6b45] ${sidebarCollapsed ? 'justify-center' : ''}`}><Grid2X2 /> {!sidebarCollapsed && 'Beranda'}</a>
-              <a href="#alat" className={`flex items-center gap-3 rounded-xl px-3 py-3 text-[13px] font-medium text-[#d0e5d9] hover:bg-[#1b6545] ${sidebarCollapsed ? 'justify-center' : ''}`}><Sparkles /> {!sidebarCollapsed && 'Semua alat PDF'}</a>
-              <a href="#riwayat" className={`flex items-center gap-3 rounded-xl px-3 py-3 text-[13px] font-medium text-[#d0e5d9] hover:bg-[#1b6545] ${sidebarCollapsed ? 'justify-center' : ''}`}><History /> {!sidebarCollapsed && 'Riwayat pekerjaan'}</a>
+              <button onClick={() => goToSection('beranda')} className={`flex items-center gap-3 rounded-xl px-3 py-3 text-[13px] font-bold transition ${activeSection === 'beranda' ? 'bg-[#e8f3ed] text-[#1f6b45]' : 'text-[#d0e5d9] hover:bg-[#1b6545]'} ${sidebarCollapsed ? 'justify-center' : ''}`}><Grid2X2 /> {!sidebarCollapsed && 'Beranda'}</button>
+              <button onClick={() => goToSection('alat')} className={`flex items-center gap-3 rounded-xl px-3 py-3 text-[13px] font-medium transition ${activeSection === 'alat' ? 'bg-[#e8f3ed] text-[#1f6b45]' : 'text-[#d0e5d9] hover:bg-[#1b6545]'} ${sidebarCollapsed ? 'justify-center' : ''}`}><Sparkles /> {!sidebarCollapsed && 'Semua alat PDF'}</button>
+              <button onClick={() => goToSection('riwayat')} className={`flex items-center gap-3 rounded-xl px-3 py-3 text-[13px] font-medium transition ${activeSection === 'riwayat' ? 'bg-[#e8f3ed] text-[#1f6b45]' : 'text-[#d0e5d9] hover:bg-[#1b6545]'} ${sidebarCollapsed ? 'justify-center' : ''}`}><History /> {!sidebarCollapsed && 'Riwayat pekerjaan'}</button>
             </div>
             {!sidebarCollapsed && <p className="px-3 pb-3 pt-8 text-[10px] font-bold uppercase tracking-[0.16em] text-[#b9d8c8]">Instansi</p>}
             <div className="flex flex-col gap-1">
-              <a href="#template" className={`flex items-center gap-3 rounded-xl px-3 py-3 text-[13px] font-medium text-[#d0e5d9] hover:bg-[#1b6545] ${sidebarCollapsed ? 'justify-center' : ''}`}><FolderOpen /> {!sidebarCollapsed && 'Template dokumen'}</a>
-              <a href="#pengaturan" className={`flex items-center gap-3 rounded-xl px-3 py-3 text-[13px] font-medium text-[#d0e5d9] hover:bg-[#1b6545] ${sidebarCollapsed ? 'justify-center' : ''}`}><Settings2 /> {!sidebarCollapsed && 'Pengaturan'}</a>
+              <button onClick={() => goToSection('template')} className={`flex items-center gap-3 rounded-xl px-3 py-3 text-[13px] font-medium transition ${activeSection === 'template' ? 'bg-[#e8f3ed] text-[#1f6b45]' : 'text-[#d0e5d9] hover:bg-[#1b6545]'} ${sidebarCollapsed ? 'justify-center' : ''}`}><FolderOpen /> {!sidebarCollapsed && 'Template dokumen'}</button>
+              <button onClick={() => goToSection('pengaturan')} className={`flex items-center gap-3 rounded-xl px-3 py-3 text-[13px] font-medium transition ${activeSection === 'pengaturan' ? 'bg-[#e8f3ed] text-[#1f6b45]' : 'text-[#d0e5d9] hover:bg-[#1b6545]'} ${sidebarCollapsed ? 'justify-center' : ''}`}><Settings2 /> {!sidebarCollapsed && 'Pengaturan'}</button>
             </div>
           </nav>
           {!sidebarCollapsed && <div className="m-4 rounded-2xl bg-[#f4f7f8] p-4">
