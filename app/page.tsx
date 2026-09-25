@@ -104,8 +104,10 @@ export default function Page() {
     <main className="min-h-screen bg-[#f7f8fa] text-[#15232f]">
       <div className="flex min-h-screen">
         <aside className={`fixed inset-y-0 left-0 z-40 flex flex-col border-r border-[#1d6547] bg-[#155239] text-white transition-all lg:static lg:translate-x-0 ${sidebarCollapsed ? 'w-[78px]' : 'w-[260px]'} ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-          <div className={`flex h-[78px] items-center border-b border-[#1d6547] ${sidebarCollapsed ? 'justify-center px-3' : 'justify-between px-6'}`}>
-            <div className="flex items-center gap-3">
+          <div className={`relative flex h-[78px] items-center overflow-hidden border-b border-[#1d6547] ${sidebarCollapsed ? 'justify-center px-3' : 'justify-between px-6'}`}>
+            <Landmark aria-hidden="true" className="pointer-events-none absolute -right-3 -bottom-5 size-24 text-white/[0.06]" />
+            <div className="pointer-events-none absolute -right-1 top-2 size-14 rounded-full border border-white/[0.08]" aria-hidden="true" />
+            <div className="relative flex items-center gap-3">
               <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#1f6b45] text-white shadow-sm"><Landmark /></div>
               {!sidebarCollapsed && <div><p className="text-[15px] font-bold tracking-[-0.02em]">RuangBerkas</p><p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#b9d8c8]">Pengadilan Agama</p></div>}
             </div>
