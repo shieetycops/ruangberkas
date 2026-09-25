@@ -162,14 +162,14 @@
   border-radius: 12px;
 }
 .tool-icon svg { width: 18px; height: 18px; }
-.tool-icon.coral { background: #fff0ef; color: #d9534f; }
-.tool-icon.amber { background: #fff8e8; color: #d59a35; }
-.tool-icon.violet { background: #f3efff; color: #8669d8; }
-.tool-icon.blue { background: #edf5ff; color: #5284d0; }
-.tool-icon.teal { background: #eaf8f5; color: #369985; }
-.tool-icon.pink { background: #fff0f5; color: #cb6b91; }
-.tool-icon.indigo { background: #eef0ff; color: #6872c9; }
-.tool-icon.slate { background: #eff3f5; color: #607581; }
+.tool-icon.coral { background: #e8f3ed; color: #1f6b45; }
+.tool-icon.amber { background: #edf6f0; color: #347b55; }
+.tool-icon.violet { background: #e8f3ed; color: #2c7650; }
+.tool-icon.blue { background: #e8f3ed; color: #286c47; }
+.tool-icon.teal { background: #e8f3ed; color: #1f6b45; }
+.tool-icon.pink { background: #e8f3ed; color: #347b55; }
+.tool-icon.indigo { background: #edf6f0; color: #286c47; }
+.tool-icon.slate { background: #edf3ef; color: #426b53; }
 
 @layer base {
   * {
