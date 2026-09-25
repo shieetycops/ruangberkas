@@ -49,6 +49,45 @@ const recentFiles = [
   { name: 'Bukti_Surat_Tambahan.pdf', action: 'Digabung', size: '8 halaman', time: 'Kemarin, 11.06', type: 'PDF' },
 ]
 
+function ToolWorkspace({ tool, onClose }: { tool: string; onClose: () => void }) {
+  const isMerge = tool === 'Gabungkan PDF'
+  const isSplit = tool === 'Pisahkan PDF'
+  const isCompress = tool === 'Kompres PDF'
+  const isSign = tool === 'Tanda Tangan PDF'
+  const isWatermark = tool === 'Beri Watermark'
+  const descriptions: Record<string, string> = {
+    'Gabungkan PDF': 'Satukan beberapa dokumen PDF menjadi satu berkas.',
+    'Pisahkan PDF': 'Pilih halaman yang ingin dipisahkan dari dokumen PDF.',
+    'Kompres PDF': 'Kurangi ukuran dokumen agar lebih mudah disimpan dan dibagikan.',
+    'PDF ke Word': 'Konversikan dokumen PDF menjadi dokumen Word yang dapat diedit.',
+    'Word ke PDF': 'Ubah dokumen Word menjadi PDF secara lokal di perangkat Anda.',
+    'Tanda Tangan PDF': 'Tambahkan tanda tangan ke dokumen tanpa mengunggahnya ke cloud.',
+    'Pindai ke PDF': 'Gabungkan gambar hasil pemindaian menjadi dokumen PDF.',
+    'Beri Watermark': 'Tambahkan watermark instansi untuk melindungi dokumen.',
+    'Unggah dokumen': 'Pilih alat dokumen, lalu mulai memproses berkas secara lokal.',
+  }
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#12202a]/40 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="tool-title">
+      <div className="w-full max-w-[720px] overflow-hidden rounded-[26px] bg-white shadow-2xl">
+        <div className="flex items-start justify-between border-b border-[#edf0f2] px-7 py-6">
+          <div><p className="mb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-[#1f6b45]">Mode lokal aktif</p><h2 id="tool-title" className="text-[24px] font-bold tracking-[-0.04em] text-[#162733]">{tool}</h2><p className="mt-2 text-[13px] text-[#7b8790]">{descriptions[tool] ?? 'Bekerja dengan dokumen Anda secara aman.'}</p></div>
+          <button onClick={onClose} className="rounded-xl p-2 text-[#89939b] hover:bg-[#f2f6f4] hover:text-[#1f6b45]" aria-label="Tutup alat"><X /></button>
+        </div>
+        <div className="px-7 py-7">
+          <label className="flex min-h-[190px] cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[#b9d8c8] bg-[#f7fbf8] px-6 text-center transition hover:border-[#1f6b45] hover:bg-[#eef8f2]">
+            <input type="file" className="sr-only" multiple={isMerge || isCompress} accept={isSign || isWatermark ? '.pdf' : undefined} />
+            <span className="mb-4 flex size-14 items-center justify-center rounded-2xl bg-[#e1f1e7] text-[#1f6b45]"><Upload /></span>
+            <span className="text-[14px] font-bold text-[#30414b]">Tarik dan lepas berkas di sini</span><span className="mt-1 text-[12px] text-[#89959d]">atau klik untuk memilih dari perangkat</span><span className="mt-4 rounded-full bg-white px-3 py-1 text-[10px] font-bold text-[#1f6b45] shadow-sm">Berkas tidak keluar dari komputer Anda</span>
+          </label>
+          {(isSplit || isSign || isWatermark) && <div className="mt-5 grid gap-4 sm:grid-cols-2"><label className="flex flex-col gap-2 text-[11px] font-bold text-[#53636c]">{isSplit ? 'Halaman yang diambil' : isSign ? 'Posisi tanda tangan' : 'Teks watermark'}<input placeholder={isSplit ? 'Contoh: 1-3, 7' : isSign ? 'Pilih setelah berkas dimuat' : 'Pengadilan Agama ...'} className="h-11 rounded-xl border border-[#dfe6e2] bg-white px-3 text-[12px] font-medium outline-none focus:border-[#1f6b45]" /></label><div className="flex flex-col justify-end"><button className="h-11 rounded-xl bg-[#1f6b45] text-[12px] font-bold text-white transition hover:bg-[#155239]">{isSplit ? 'Pisahkan halaman' : isSign ? 'Tambahkan tanda tangan' : 'Terapkan watermark'}</button></div></div>}
+          {isCompress && <div className="mt-5 flex items-center justify-between rounded-xl bg-[#f4f8f5] px-4 py-3 text-[12px] text-[#5f7068]"><span className="font-bold">Tingkat kompresi</span><select className="rounded-lg border border-[#dfe6e2] bg-white px-3 py-2 text-[12px] font-semibold text-[#1f6b45]"><option>Seimbang</option><option>Ukuran terkecil</option><option>Kualitas terbaik</option></select></div>}
+        </div>
+        <div className="flex items-center justify-between border-t border-[#edf0f2] bg-[#fbfcfc] px-7 py-4"><p className="flex items-center gap-2 text-[11px] font-semibold text-[#6f7f78]"><ShieldCheck className="text-[#1f6b45]" /> Pemrosesan offline dan aman</p><button onClick={onClose} className="rounded-xl border border-[#dfe6e2] px-4 py-2 text-[12px] font-bold text-[#52635b] hover:bg-white">Batal</button></div>
+      </div>
+    </div>
+  )
+}
+
 export default function Page() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
@@ -107,7 +146,7 @@ export default function Page() {
           </div>
         </section>
       </div>
-      {activeTool && <div className="fixed bottom-5 left-1/2 z-50 flex -translate-x-1/2 items-center gap-3 rounded-xl bg-[#183c48] px-4 py-3 text-[12px] font-semibold text-white shadow-xl"><CheckCircle2 className="text-[#b8e4d8]" /> {activeTool} siap digunakan pada tahap berikutnya.<button onClick={() => setActiveTool(null)} className="ml-2 text-white/60 hover:text-white" aria-label="Tutup notifikasi"><X /></button></div>}
+      {activeTool && <ToolWorkspace tool={activeTool} onClose={() => setActiveTool(null)} />}
     </main>
   )
 }
